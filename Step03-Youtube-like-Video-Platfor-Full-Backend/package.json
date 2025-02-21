@@ -1,0 +1,22 @@
+{
+  "name": "step-03-youtube-like-video-platfor-full-backend",
+  "version": "1.0.0",
+  "description": "here we will write the complete backend of youtube like video platform as per industry standards - srpk ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "video",
+    "platform",
+    "backend",
+    "srpk",
+    "prashant"
+  ],
+  "author": "Prashant-SRPK",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
