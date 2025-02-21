@@ -1,0 +1,12 @@
+--> databse ko connect karne ke 2 tareeke hain....humari main entry file "index.js" hai "src" folder mein, toh hum database connect
+    code "index.js" mein likh sakte hain, jaise hi backend run hoga toh sabse pehle database connect ho jaaye.
+
+    * Doosra tareeka hai ki ek alag databse folder banao or usmein ek file create karo "databse-connect" naam se yaa jo bhi naam rakhna
+        or fir uss file ko "index.js" mein import kara lo jisse kyoki entry point toh wahi hai humare backend kaa.
+
+    * Appraoch dono hi sahi hain....lekin alag ek file mein segregate karke likhne se zyada readability badhti hai...
+        hum dono tareeke hi dekhenge, ek baar "index.js" mein bhi likhenge or fir 2nd method se bhi likhenge
+
+    Tip:-> Databse connect karne kaa code hamesha try & catch folder mein rakhna hota hai, and async await kaa use karna hota hai
+            .....kyoki database kisi or continent mein rakha hua hai, toh fir time lag sakta hai, isliye async await
+            is mandatory.     
