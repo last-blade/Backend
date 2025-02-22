@@ -9,4 +9,4 @@
 
     Tip:-> Databse connect karne kaa code hamesha try & catch folder mein rakhna hota hai, and async await kaa use karna hota hai
             .....kyoki database kisi or continent mein rakha hua hai, toh fir time lag sakta hai, isliye async await
-            is mandatory.     
+            is mandatory.
