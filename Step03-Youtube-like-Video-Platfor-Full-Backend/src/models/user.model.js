@@ -56,8 +56,59 @@ const userSchema = new Schema({
     
 }, {timestamps: true});
 
+
+userSchema.pre("save", async function(next){
+    if(!this.isModified("password")){ //agar password modifiy nahin hua hai toh return kar jaao
+        return next();
+    }
+
+    else{
+        this.password = bcrypt.hash(this.password, 10);
+        next();
+    }
+}) // yahan par hum mongoose kaa "pre" middleware use kar rahe hain, see comment: 2 below
+
+userSchema.methods.isPasswordCorrect = async function(password){ // see Comment: 3
+    return await bcrypt.compare(password, this.password)
+}
+
+userSchema.methods.generateAccessToken = function(){
+    const accessToken = jwt.sign(
+        {
+            id: this._id, email: this.email, fullname: this.fullname, username: this.username
+        }, 
+
+        process.env.ACCESS_TOKEN_SECRET,
+
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+        }
+    )
+
+    return accessToken;
+}
+
+userSchema.method.generateRefreshToken = async function(){
+    const refreshToken = jwt.sign(
+        {
+            id: this._id,
+        }, 
+
+        process.env.REFRESH_TOKEN_SECRET,
+
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+        }
+    )
+
+    return refreshToken;
+}
+
+
 export const User = mongoose.model("User", userSchema);
 
+
+//COMMENT:-1
 /*
 --> How Indexing Improves Query Performance
     When you run a query like:
@@ -89,4 +140,31 @@ Answer:->   Indexing is applied to the field (email), not just a single document
         { "_id": 3, "email": "charlie@example.com" }
     ]
 
+*/
+
+//COMMENT:-2
+/*
+    "pre" ek middleware hai mongoose kaa, jo ki hum use karte hain like, You use the pre-hook (middleware) in Mongoose 
+    when you need to perform some actions before executing a database operation.
+    Neeche kuch usecases likh raha hoon:
+    1️⃣ Hashing Password Before Saving a User
+    2️⃣ Adding Timestamps Before Saving
+    3️⃣ Modifying Data Before Updating
+
+    Syntax: 
+    userSchema.pre("save", async function(){
+
+    });
+
+*/
+
+//COMMENT:-3
+/*
+mongoose ke andar alreday kuch pre-defined methods hote hain like updateOne, deleteOne, etc, but hum apne khud ke "custom methods"
+bhi define kar sakte hain.....jiss schema ke liye method banana hai usko target karke hum method bana sakte hain like
+userSchema.methods.<your-custom-method-name> = async function(password){ humein password ko check karna hai valid hai ki nahin, toh isliye parameter mein password pass kiya hai
+}
+
+// ".methods" jo hai ek object hai, or iss object ke andar predefined properties hoti hain alreday, but humein apni property
+    chahiye custom, toh hum seedhe methods.<my own custom method> karke create kar sakte hain
 */
