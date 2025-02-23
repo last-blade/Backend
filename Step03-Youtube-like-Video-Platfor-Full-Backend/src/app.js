@@ -1,5 +1,5 @@
 import express from "express";
-import cookieParser from "cookie-parse";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 
 const app = express();
@@ -96,5 +96,12 @@ app.use(cookieParser());
     With cookie-parser → Express can easily access cookies from req.cookies.
 
 */
+
+//Importing Routes
+import userRouter from "./routes/user.routes.js" 
+
+
+//routes declaration
+app.use("/api/v1/user", userRouter)
 
 export { app }

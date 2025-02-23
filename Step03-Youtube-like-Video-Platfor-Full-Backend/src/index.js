@@ -1,20 +1,20 @@
 import dotenv from "dotenv";
-import { DB_NAME } from "./constants.js";
 import connectDB from "./db/index.js";
-import express from "express";
+// import express from "express";
+import { app } from "./app.js";
 
 dotenv.config({
     path: "./env"
 });
 
-const app = express();
+// const app = express();
 
 connectDB() /* jab bhi koi "asynchronous" method complete hota hai toh ek "promise" bhi return karta hai, since connectDB ek async method hai (see in "db" folder) toh hum .then and .catch bhi likh sakte hain, mostlt professional codes mein yeh dekhne ko bhi milta hai, otheriwse yeh ek optional hai step hai */
 .then(() => {
-    app.on("error", (error) => {
-        console.error("Error", error);
-        throw error;
-    });
+    // app.on("error", (error) => {
+    //     console.error("Error", error);
+    //     throw error;
+    // });
 
     app.listen(process.env.PORT || 8000, () => {
         console.log(`Server is running on 🛞  http://localhost:${process.env.PORT}`)
@@ -23,7 +23,7 @@ connectDB() /* jab bhi koi "asynchronous" method complete hota hai toh ek "promi
 
 .catch((error) => {
     console.log("MongoDB Connection FAILED !!", error)
-})
+});
 
 
 
