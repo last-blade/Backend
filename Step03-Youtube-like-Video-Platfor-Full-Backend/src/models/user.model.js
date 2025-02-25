@@ -63,7 +63,7 @@ userSchema.pre("save", async function(next){
     }
 
     else{
-        this.password = bcrypt.hash(this.password, 10);
+        this.password = await bcrypt.hash(this.password, 10);
         next();
     }
 }) // yahan par hum mongoose kaa "pre" middleware use kar rahe hain, see comment: 2 below
