@@ -3,6 +3,7 @@ import {apiError} from "../utils/apiError.js"
 import {User} from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { apiResponse } from "../utils/apiResponse.js"
+import { sendMail } from "../utils/mailer.js"
 
 const registerUser = asyncHandler(async (request, response) => {
     const {fullname, email, username, password} = request.body;
@@ -80,6 +81,8 @@ const registerUser = asyncHandler(async (request, response) => {
     if(!foundedUser){
         throw new apiError(500, "Something went wrong while registering the user.")
     }
+
+    await sendMail(email, "Welcome to our platform Youtube", `Hello ${fullname},\n\nThank you for registering!`);
 
     return response.status(201).json(
         new apiResponse(200, foundedUser, "User registered successfully.")
