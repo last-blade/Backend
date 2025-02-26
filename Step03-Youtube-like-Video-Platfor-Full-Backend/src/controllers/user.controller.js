@@ -24,8 +24,8 @@ const registerUser = asyncHandler(async (request, response) => {
         throw new apiError(400, "All field are required")
     }
 
-    const existedUser = User.findOne({
-        $or: [{ username }, { email }]
+    const existedUser = await User.findOne({
+        $or: [{ username }, { email }] // '$or'-> The $or operator is used to specify that either one of the conditions should match.
     });
 
     if(existedUser){
@@ -41,8 +41,14 @@ const registerUser = asyncHandler(async (request, response) => {
     */
     console.log("Multer req.files: ", request.files);
     const avatarLocalPath = request.files?.avatar[0]?.path; // "avatar" naam maine "user.routes.js" mein diya hai isliye yahan bhi yahi same usser karna hai
-    const coverImageLocalPath = request.files?.coverImage[0]?.path;// "coverImage" naam maine "user.routes.js" mein diya hai isliye yahan bhi yahi same usser karna hai
-
+    // const coverImageLocalPath = request.files?.coverImage[0]?.path;// "coverImage" naam maine "user.routes.js" mein diya hai isliye yahan bhi yahi same usser karna hai
+    console.log("avatarLocalpath:", avatarLocalPath)
+    
+    let coverImageLocalPath;
+    if(request.files && Array.isArray(request.files.coverImage) && request.files.coverImage.length > 0){
+        coverImageLocalPath = request.files.coverImage[0].path; 
+    }
+    
     if(!avatarLocalPath){
         throw new apiError(400, "Avatar file is required.")
     }
@@ -65,6 +71,10 @@ const registerUser = asyncHandler(async (request, response) => {
         username: username.toLowerCase()
     });
 
+    /*check kar rahe hain ki user create hua bhi hai ki nahin, agar create ho gaya hai toh mongodb mein mil jaayega, 
+    or hum user ko find karke dekh rahe hain uski "_id" kaa use kar ke, agar find ho gaya toh user create ho gaya hai
+    and agar create ho gaya hai toh fir hum ".select" kaa use karke "passwor and refreshToken" ko exclude kar rahe hain
+    jisse ki user ko hum response send kare toh fir password and token show naa kare usko, jab bhi woh api fetch kare frontend mein. */
     const foundedUser = await User.findById(createdUser._id).select("-password -refreshToken");
 
     if(!foundedUser){
