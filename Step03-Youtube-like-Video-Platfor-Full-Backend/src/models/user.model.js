@@ -69,7 +69,7 @@ userSchema.pre("save", async function(next){
 }) // yahan par hum mongoose kaa "pre" middleware use kar rahe hain, see comment: 2 below
 
 userSchema.methods.isPasswordCorrect = async function(password){ // see Comment: 3
-    return await bcrypt.compare(password, this.password)
+    return await bcrypt.compare(password, this.password) // "this.password" database mein jo stored hai woh wala password hai, and "password" jo hai woh user send akrega login karte samay or fir decrypt karenge password ko or match karenge dono passwords ko
 }
 
 userSchema.methods.generateAccessToken = function(){
