@@ -1,5 +1,4 @@
-import { access } from "fs";
-import { asyncHandler, apiError, uploadOnCloudinary, apiResponse, sendMail, User } from "../allImports.js"
+import { asyncHandler, apiError, apiResponse, sendMail, User } from "../allImports.js"
 
 const generateAccessTokenAndrefreshToken = async (userId) => {
     const user = await User.findOne(userId);
@@ -12,10 +11,10 @@ const generateAccessTokenAndrefreshToken = async (userId) => {
     return {accessToken, refreshToken};
 }
 
-const loginUser = asyncHandler (async(request, response) => {
+const loginUser = asyncHandler (async (request, response) => {
     const {email, username, password} = request.body;
-
-    if(!username || email){
+    console.log("email: ", request.body);
+    if(!username || !email){
         throw new apiError(400, "Username or email is required.")
     }
 
@@ -62,6 +61,8 @@ const loginUser = asyncHandler (async(request, response) => {
         new apiResponse(200, {user: loggedInUser, accessToken, refreshToken}, "User loggedin successfully.")
     )  
 })
+
+export {loginUser}
 
 
 //COMMENT-1

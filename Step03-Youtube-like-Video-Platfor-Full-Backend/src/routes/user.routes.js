@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { registerUser } from "../controllers/userControllers/registerUser.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
+import { loginUser } from "../controllers/userControllers/loginUser.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { logoutUser } from "../controllers/userControllers/logoutUser.controller.js";
 
 const router = Router();
 
@@ -18,6 +21,12 @@ router.route("/register").post(
     ]),
     registerUser
 );
+
+router.route("/login").post(loginUser)
+
+
+//secured routes
+router.route("/logout").post(verifyJWT, logoutUser);
 
 /*
     --> oopar wala code pehle aisa dikhta tha jab humne multe middleware nahin lagaya tha, see below:-
