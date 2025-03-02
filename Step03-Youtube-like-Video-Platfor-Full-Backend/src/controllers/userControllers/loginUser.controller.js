@@ -2,8 +2,8 @@ import { asyncHandler, apiError, apiResponse, sendMail, User } from "../allImpor
 
 const generateAccessTokenAndrefreshToken = async (userId) => {
     const user = await User.findOne(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+    const accessToken = await user.generateAccessToken();
+    const refreshToken = await user.generateRefreshToken();
 
     user.refreshToken = refreshToken;
     await user.save({saveBeforeValidation: false});  // Hum "saveBeforeValidation" kaa use kyon kar rahe hain ? see the Comment-1 in this page.
@@ -14,7 +14,7 @@ const generateAccessTokenAndrefreshToken = async (userId) => {
 const loginUser = asyncHandler (async (request, response) => {
     const {email, username, password} = request.body;
     console.log("email: ", request.body);
-    if(!username || !email){
+    if(!(username || email)){
         throw new apiError(400, "Username or email is required.")
     }
 

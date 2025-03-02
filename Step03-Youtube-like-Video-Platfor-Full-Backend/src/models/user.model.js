@@ -72,7 +72,7 @@ userSchema.methods.isPasswordCorrect = async function(password){ // see Comment:
     return await bcrypt.compare(password, this.password) // "this.password" database mein jo stored hai woh wala password hai, and "password" jo hai woh user send akrega login karte samay or fir decrypt karenge password ko or match karenge dono passwords ko
 }
 
-userSchema.methods.generateAccessToken = function(){
+userSchema.method.generateAccessToken = function(){
     const accessToken = jwt.sign(
         {
             id: this._id, email: this.email, fullname: this.fullname, username: this.username
