@@ -77,7 +77,7 @@ const registerUser = asyncHandler(async (request, response) => {
         throw new apiError(500, "Something went wrong while registering the user.")
     }
 
-    await sendMail(email, "Welcome to our platform Youtube", `Hello ${fullname},\n\nThank you for registering!`);
+    await sendMail(email, "Welcome to our platform Video Platform", `Hello ${fullname},\n\nThank you for registering!`);
 
     return response.status(201).json(
         new apiResponse(200, foundedUser, "User registered successfully.")
