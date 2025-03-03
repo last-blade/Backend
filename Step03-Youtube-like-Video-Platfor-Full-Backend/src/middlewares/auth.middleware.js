@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import { apiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
@@ -12,14 +12,18 @@ const verifyJWT = asyncHandler(async (request, _, next) => { // "response" kaa k
             if(!token){
                 throw new apiError(401, "Unauthorized access")
             }
+
+            console.log("Token:", token)
         
             //agar token hai, toh verify karo ki yeh token fake toh nahin hai
             const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET) // token generate karte time maine user ki information bhi store kara di thi token ke saath mein(like username, _id, email, etc), user model mein jaake check karo, wahan par maine generate access token kaa function likha hua hai, toh maine
-            const userId = decodedToken?._id;
+            console.log("decoded token: ", decodedToken)
+            const userId = decodedToken?.id;
+            console.log("UserId", userId)
             const foundedUser = await User.findById(userId).select("-password -refreshToken");
-        
+            console.log("foundedUser", foundedUser);
             //agar user find nahin ho paaya hai toh iska matlab invalid access token hai. 
-            if(!user){
+            if(!foundedUser){
                 throw new apiError(401, "Invalid access token")
             }
         

@@ -29,10 +29,10 @@ const logoutUser = asyncHandler( async(request, response) => {
     );
 
 
-    options = {
+    const options = {
         httpOnly: true,
         secure: true,
-    }
+    };
 
     return response.status(200)
     .clearCookie("accessToken", options) // naam sahi se likhna hai token kaa, tabhi token remove hoga cookies mein se
