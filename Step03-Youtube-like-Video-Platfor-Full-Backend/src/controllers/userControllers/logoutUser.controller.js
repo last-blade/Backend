@@ -1,4 +1,4 @@
-import { asyncHandler, apiError, apiResponse, sendMail, User } from "../allImports.js"
+import { asyncHandler, apiResponse, User } from "../allImports.js"
 
 /*
 --> For logging out a user, the main idea is:

@@ -62,7 +62,7 @@ const loginUser = asyncHandler (async (request, response) => {
     )  
 })
 
-export {loginUser}
+export {loginUser, generateAccessTokenAndrefreshToken}
 
 
 //COMMENT-1
