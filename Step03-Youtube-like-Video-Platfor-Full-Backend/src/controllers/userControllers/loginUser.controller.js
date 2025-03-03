@@ -1,7 +1,7 @@
 import { asyncHandler, apiError, apiResponse, sendMail, User } from "../allImports.js"
 
 const generateAccessTokenAndrefreshToken = async (userId) => {
-    const user = await User.findOne(userId);
+    const user = await User.findById(userId);
     const accessToken = await user.generateAccessToken();
     const refreshToken = await user.generateRefreshToken();
 
@@ -13,7 +13,7 @@ const generateAccessTokenAndrefreshToken = async (userId) => {
 
 const loginUser = asyncHandler (async (request, response) => {
     const {email, username, password} = request.body;
-    console.log("email: ", request.body);
+    // console.log("response: ", request.body);
     if(!(username || email)){
         throw new apiError(400, "Username or email is required.")
     }
