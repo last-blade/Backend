@@ -22,4 +22,6 @@ const changeCurrentPassword = asyncHandler(async (request, response) => {
 
     return response.status(200)
     .json(new apiResponse(200, {}, "Password changed successfully."))
-})
+});
+
+export {changeCurrentPassword}
