@@ -24,3 +24,5 @@ const updateUserAvatar = asyncHandler(async (request, response) => {
 
     ).select("-password")
 });
+
+export {updateUserAvatar}
