@@ -25,7 +25,7 @@ const updateUserCoverImage = asyncHandler(async (request, response) => {
     ).select("-password");
 
     return response.status(200)
-    .json(new apiResponse(200, user, "Cover image updated successfully"))
+    .json(new apiResponse(200, user, "Cover image updated successfully"));
 });
 
 export {updateUserCoverImage}
