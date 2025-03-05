@@ -22,7 +22,10 @@ const updateUserAvatar = asyncHandler(async (request, response) => {
 
         {new: true}// databse mein information update hone ke baad, updated user ko return karta hai, like user ne agar "fullname" update kiya hai, toh fir yeh jo hai "user" object ko return karega or usmein updated "fullname" hoga
 
-    ).select("-password")
+    ).select("-password");
+
+    return response.status(200)
+    .json(new apiResponse(200, user, "Avatar image updated successfully"));
 });
 
 export {updateUserAvatar}
