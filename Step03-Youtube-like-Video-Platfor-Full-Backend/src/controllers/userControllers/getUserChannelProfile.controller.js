@@ -105,3 +105,5 @@ const getCurrentUserProfile = asyncHandler(async (request, response) => {
     return response.status(200)
     .json(new apiResponse(200, channel[0], "User channel fetched successfully"))
 });
+
+export { getCurrentUserProfile }
