@@ -12,7 +12,7 @@
 
 import { asyncHandler, apiError, apiResponse, User, uploadOnCloudinary } from "../allImports.js"
 
-const getCurrentUserProfile = asyncHandler(async (request, response) => {
+const getCurrentUserChannelProfile = asyncHandler(async (request, response) => {
     const { username } = request.params;
 
     if(!username?.trim()){
@@ -106,4 +106,4 @@ const getCurrentUserProfile = asyncHandler(async (request, response) => {
     .json(new apiResponse(200, channel[0], "User channel fetched successfully"))
 });
 
-export { getCurrentUserProfile }
+export { getCurrentUserChannelProfile }

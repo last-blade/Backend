@@ -5,6 +5,13 @@ import { loginUser } from "../controllers/userControllers/loginUser.controller.j
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { logoutUser } from "../controllers/userControllers/logoutUser.controller.js";
 import { refreshAccessToken } from "../controllers/userControllers/refreshAccessToken.controller.js";
+import { changeCurrentPassword } from "../controllers/userControllers/changeCurrentPassword.controller.js";
+import { getCurrentUser } from "../controllers/userControllers/getCurrentUser.controller.js";
+import { updateAccountDetails } from "../controllers/userControllers/updateAccountDetails.controllers.js";
+import { updateUserAvatar } from "../controllers/userControllers/updateUserAvatar.controller.js";
+import { updateUserCoverImage } from "../controllers/userControllers/updateUserCoverImage.controller.js";
+import { getCurrentUserChannelProfile } from "../controllers/userControllers/getUserChannelProfile.controller.js";
+import { getWatchHistory } from "../controllers/userControllers/getWatchHistory.controller.js";
 
 const router = Router();
 
@@ -28,7 +35,19 @@ router.route("/login").post(loginUser)
 
 //secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
-router.route("/refresh-token").post(refreshAccessToken)
+router.route("/refresh-token").post(refreshAccessToken);
+router.route("/change-password").post(verifyJWT, changeCurrentPassword);
+router.route("/current-user").get(verifyJWT, getCurrentUser);
+
+
+router.route("/update-account").patch(verifyJWT, updateAccountDetails);
+router.route("/avatar-update").patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
+router.route("/coverimage-update").patch(verifyJWT, upload.single("/coverImage"), updateUserCoverImage);
+
+
+router.route("/c/:username").get(verifyJWT, getCurrentUserChannelProfile);
+router.route("/history").get(verifyJWT, getWatchHistory);
+
 
 /*
     --> oopar wala code pehle aisa dikhta tha jab humne multe middleware nahin lagaya tha, see below:-
