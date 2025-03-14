@@ -6,7 +6,7 @@ const getWatchHistory = asyncHandler(async (request, response) => {
         //first pipeline
         {
             $match: {
-                _id: new mongoose.Types.ObjectId(request.user.id) // request.user.id is usually a string, like: "65e984f5c9e88d1a9b3c2a10". Convert the String to an ObjectId, new mongoose.Types.ObjectId(request.user.id) converts it into an ObjectId: new ObjectId("65e984f5c9e88d1a9b3c2a10")
+                _id: new mongoose.Schema.Types.ObjectId(request.user.id) // request.user.id is usually a string, like: "65e984f5c9e88d1a9b3c2a10". Convert the String to an ObjectId, new mongoose.Types.ObjectId(request.user.id) converts it into an ObjectId: new ObjectId("65e984f5c9e88d1a9b3c2a10")
 
             }
         },
